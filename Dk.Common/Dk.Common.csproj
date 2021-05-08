@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FsLib.Common-netstandard" Version="6.0.0-preview.3.0.2" />
+  </ItemGroup>
+
+</Project>
