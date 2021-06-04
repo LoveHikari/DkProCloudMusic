@@ -2,37 +2,55 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:metro="clr-namespace:AduSkin.Controls.Metro;assembly=AduSkin"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DkProCloudMusic.Views"
              xmlns:viewModels="clr-namespace:DkProCloudMusic.ViewModels"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="550">
     <!--<UserControl.DataContext>
         <viewModels:MainWindowViewModel/>
     </UserControl.DataContext>-->
-    <Grid Background="{StaticResource WhiteBackground}">
+    <Grid Background="{StaticResource DefaultBrush}">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
             <StackPanel Orientation="Vertical" Width="215" Margin="0, 0, 20, 0">
-                <metro:MetroSwitch Content="跟随系统启动：" IsChecked="{Binding Path=Model.DKProSet.IsRunWithSystemStart, Mode=TwoWay}" Margin="0,5"/>
-                <metro:MetroSwitch Content="启动后最小化：" IsChecked="{Binding Path=Model.DKProSet.IsMinimizedAfterRun, Mode=TwoWay}" Margin="0,5"/>
-                <metro:MetroSwitch Content="自动执行脚本：" IsChecked="{Binding Path=Model.DKProSet.IsExecuteScriptAfterRun, Mode=TwoWay}" Margin="0,5"/>
-                <metro:MetroSwitch Content="高音质支持：" IsChecked="{Binding Path=Model.DKProSet.IsUseHighQualitySupport, Mode=TwoWay}" Margin="0,5"/>
-                <metro:MetroSwitch Content="UWP支持：" IsChecked="{Binding Path=Model.DKProSet.IsUseUWPSupport, Mode=TwoWay}" Margin="0,5"/>
+                <DockPanel>
+                    <TextBlock Text="跟随系统启动: " VerticalAlignment="Center" />
+                    <ToggleButton IsChecked="{Binding Path=Model.DKProSet.IsRunWithSystemStart, Mode=TwoWay}" Margin="0,5" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Right"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="启动后最小化: " VerticalAlignment="Center" />
+                    <ToggleButton IsChecked="{Binding Path=Model.DKProSet.IsMinimizedAfterRun, Mode=TwoWay}" Margin="0,5" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Right"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="自动执行脚本: " VerticalAlignment="Center" />
+                    <ToggleButton IsChecked="{Binding Path=Model.DKProSet.IsExecuteScriptAfterRun, Mode=TwoWay}" Margin="0,5" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Right"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="高音质支持: " VerticalAlignment="Center" />
+                    <ToggleButton IsChecked="{Binding Path=Model.DKProSet.IsUseHighQualitySupport, Mode=TwoWay}" Margin="0,5" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Right"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="UWP支持：" VerticalAlignment="Center" />
+                    <ToggleButton IsChecked="{Binding Path=Model.DKProSet.IsUseUWPSupport, Mode=TwoWay}" Margin="0,5" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Right"/>
+                </DockPanel>
                 <DockPanel Margin="0,5">
-                    <TextBlock TextWrapping="Wrap" Text="程序端口："></TextBlock>
-                    <metro:MetroTextBox Margin="10,0" Text="{Binding Model.DKProSet.SoftwarePort}" Height="26" Width="100" HorizontalAlignment="Right"/>
+                    <TextBlock TextWrapping="Wrap" Text="程序端口：" VerticalAlignment="Center"/>
+                    <hc:NumericUpDown Margin="0,0" Value="{Binding Model.DKProSet.SoftwarePort}" Width="100" HorizontalAlignment="Right"/>
                 </DockPanel>
             </StackPanel>
             <StackPanel Width="215">
-                <metro:MetroSwitch Content="同生共死：" IsChecked="{Binding Path=Model.DKProSet.IsUseLiveAndDieTogether, Mode=TwoWay}" Margin="0,5"/>
-                <metro:MetroTextBox Text="{Binding Model.DKProSet.LiveAndDieTogetherSoftwarePath}" TextWrapping="Wrap" Height="26" Margin="0,5" InputHint="请输入网易云音乐的路径"/>
+                <DockPanel>
+                    <TextBlock Text="同生共死：" VerticalAlignment="Center" />
+                    <ToggleButton IsChecked="{Binding Path=Model.DKProSet.IsUseLiveAndDieTogether, Mode=TwoWay}" Margin="0,5" Style="{StaticResource ToggleButtonSwitch}" HorizontalAlignment="Right"/>
+                </DockPanel>
+                <hc:TextBox Text="{Binding Model.DKProSet.LiveAndDieTogetherSoftwarePath}" TextWrapping="NoWrap" Height="26" Margin="0,5" hc:InfoElement.Placeholder="请输入网易云音乐的路径"/>
                 <DockPanel Margin="0,5">
                     <TextBlock TextWrapping="Wrap" Text="音源优先级："></TextBlock>
-                    <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="音源帮助" TextDecorations="Underline"  Margin="0, 0, 40, 0"></TextBlock>
+                    <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="音源帮助" TextDecorations="Underline" Foreground="Blue"  Margin="0, 0, 40, 0"></TextBlock>
                 </DockPanel>
-                <metro:MetroTextBox Text="{Binding Model.DKProSet.ResourcePriority}" TextWrapping="NoWrap" Height="26" Margin="0,5"/>
-                <metro:AduFlatButton Content="保存设置" Command="{Binding SaveConfigCommand}" Margin="0,5"/>
+                <TextBox Text="{Binding Model.DKProSet.ResourcePriority}" TextWrapping="NoWrap" Height="26" Margin="0,5"/>
+                <Button Content="保存设置" Command="{Binding SaveConfigCommand}" Margin="0,5" Width="200" Style="{StaticResource ButtonInfo}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

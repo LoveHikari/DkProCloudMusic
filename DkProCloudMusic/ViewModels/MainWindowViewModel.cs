@@ -1,12 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading;
+﻿using Dk.Common;
+using DkProCloudMusic.Models;
+using HandyControl.Controls;
+using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
-using AduSkin.Controls.Metro;
-using Dk.Common;
-using DkProCloudMusic.Models;
-using DkProCloudMusic.Views;
 
 namespace DkProCloudMusic.ViewModels
 {
@@ -15,7 +13,12 @@ namespace DkProCloudMusic.ViewModels
         public MainWindowModel Model { get; set; }
         public MainWindowViewModel()
         {
+            DKProSet dkProSet = IOHelper.GetConfiguration()??new DKProSet();
+            App.DkProSet = dkProSet;
+
             this.Model = new MainWindowModel();
+            this.Model.ConSettingViewModel = new ConSettingViewModel();
+            this.Model.ConStartViewModel = new ConStartViewModel();
 
         }
 
@@ -25,9 +28,7 @@ namespace DkProCloudMusic.ViewModels
             {
                 return new DelegateCommand<object>(delegate (object obj)
                 {
-                    DKProSet dkProSet = IOHelper.GetConfiguration();
-                    Model.DKProSet = dkProSet;
-                    Model.NowPort = Model.DKProSet.SoftwarePort;
+
                     //this.GetConfigurationAndChangeUi();
                     //if (this._dkProSet.IsMinimizedAfterRun)
                     //{
@@ -49,86 +50,59 @@ namespace DkProCloudMusic.ViewModels
             }
         }
 
-        public ICommand StartScriptCommand
+        public ICommand StateChangedCommand => new DelegateCommand<object>(delegate (object obj)
+        {
+            MainWindow win = (MainWindow)obj;
+            if (win.WindowState == WindowState.Minimized)
+            {
+                win.Hide();
+            }
+
+
+        });
+
+        public ICommand ClosingCommand
         {
             get
             {
                 return new DelegateCommand<object>(delegate (object obj)
                 {
-                    this.Model.IsRunning = !this.Model.IsRunning;
-                    if (this.Model.IsRunning)
+                    CancelEventArgs args = (CancelEventArgs)obj;
+                    var result = HandyControl.Controls.MessageBox.Show("是否确认关闭？", "滑稽提示", MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK)
                     {
-                        this.StartScript();
-                        return;
+                        Model.ConStartViewModel.StopScript();
+
+                        // this.UnSetProxy();
+                        //this.notifyIconMain.Visible = false;
+                        if (App.DkProSet.IsUseLiveAndDieTogether)
+                        {
+                            CommandHelper.ExecuteCommandLine("taskkill /f /t /im cloudmusic.exe");
+                        }
+                        CommandHelper.ExecuteCommandLine("taskkill /f /t /im DKProCloudMusic.exe");
+                        Environment.Exit(0);
                     }
-                    this.StopScript();
-
-
-                });
-            }
-        }
-        public ICommand SaveConfigCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(delegate (object obj)
-                {
-                    Model.NowPort = Model.DKProSet.SoftwarePort;
-                    IOHelper.SetConfiguration(Model.DKProSet);
-                    AduMessageBox.Show("保存成功！");
-                });
-            }
-        }
-        public ICommand ClosedCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(delegate (object obj)
-                {
-                    this.StopScript();
-
-                    // this.UnSetProxy();
-                    //this.notifyIconMain.Visible = false;
-                    if (this.Model.DKProSet.IsUseLiveAndDieTogether)
+                    else
                     {
-                        CommandHelper.ExecuteCommandLine("taskkill /f /t /im cloudmusic.exe");
+                        args.Cancel = true;
                     }
-                    CommandHelper.ExecuteCommandLine("taskkill /f /t /im DKProCloudMusic.exe");
-                    Environment.Exit(0);
-
 
                 });
             }
         }
 
-        private void StartScript()
+        public ICommand SelectionChangedCommand => new DelegateCommand<object>(delegate (object obj)
         {
-            Model.RunStatus = "脚本运行中";
-            Model.StartOrClose = "你们快住手，不要再打了啦";
-            new Thread(delegate ()
+            int index = obj.ToInt32();
+            if (index == 0)
             {
-                string text = "\"" + AppDomain.CurrentDomain.BaseDirectory + "src\\node\\node.exe\" ";
-                string text2 = "\"" + AppDomain.CurrentDomain.BaseDirectory + "src\\script\\app.js\" ";
-                string str = string.Concat(new string[]
-                {
-                    text,
-                    text2,
-                    " -a 127.0.0.1 -p ",
-                    this.Model.DKProSet.SoftwarePort.ToString(),
-                    " -o ",
-                    this.Model.DKProSet.ResourcePriority
-                });
-                CommandHelper.ExecuteCommandLine(str);
-            }).Start();
-        }
+                Model.ConStartViewModel.Model.NowPort = App.DkProSet.SoftwarePort;
+            }
 
-        private void StopScript()
-        {
-            Model.RunStatus = "脚本未启动";
-            Model.StartOrClose = "赶快给我启动这个脚本，我急用";
-            CommandHelper.CloseNodeProcess();
-        }
-        
+
+        });
+
+
 
     }
 }

@@ -5,9 +5,7 @@ VisualStudioVersion = 16.0.31220.234
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DkProCloudMusic", "DkProCloudMusic\DkProCloudMusic.csproj", "{965FAA87-ABDE-447A-9ED6-C3BF1E9C5D81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dk.Common", "ClassLibrary1\Dk.Common.csproj", "{135ACBD5-1925-40D8-AB61-3189A738C254}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfLibrary1", "WpfLibrary1\WpfLibrary1.csproj", "{D3155055-C67F-44CD-8C9E-F518EA296346}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dk.Common", "Dk.Common\Dk.Common.csproj", "{135ACBD5-1925-40D8-AB61-3189A738C254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{135ACBD5-1925-40D8-AB61-3189A738C254}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{135ACBD5-1925-40D8-AB61-3189A738C254}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{135ACBD5-1925-40D8-AB61-3189A738C254}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3155055-C67F-44CD-8C9E-F518EA296346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3155055-C67F-44CD-8C9E-F518EA296346}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3155055-C67F-44CD-8C9E-F518EA296346}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3155055-C67F-44CD-8C9E-F518EA296346}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

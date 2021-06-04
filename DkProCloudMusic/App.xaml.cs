@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using Dk.Common;
 using GalaSoft.MvvmLight.Threading;
 
 namespace DkProCloudMusic
@@ -15,6 +16,7 @@ namespace DkProCloudMusic
     /// </summary>
     public partial class App : Application
     {
+        public static DKProSet DkProSet { get; set; }
         public App()
         {
             Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
@@ -31,7 +33,7 @@ namespace DkProCloudMusic
         {
             //LogHelper.WriteError(e.Exception, "UI线程全局异常");
             e.Handled = true;
-            //throw e.Exception;
+            throw e.Exception;
         }
 
         /// <summary>
@@ -41,11 +43,10 @@ namespace DkProCloudMusic
         /// <param name="e"></param>
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            var exception = e.ExceptionObject as Exception;
-            if (exception != null)
+            if (e.ExceptionObject is Exception exception)
             {
                 //LogHelper.WriteError(exception, "非UI线程全局异常");
-                //throw exception;
+                throw exception;
             }
         }
     }

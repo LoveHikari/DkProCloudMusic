@@ -1,13 +1,12 @@
-﻿<Metro:MetroWindow x:Class="DkProCloudMusic.MainWindow"
+﻿<Window x:Class="DkProCloudMusic.MainWindow"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:Metro="clr-namespace:AduSkin.Controls.Metro;assembly=AduSkin"
                    xmlns:local="clr-namespace:DkProCloudMusic.Views"
                    xmlns:viewModels="clr-namespace:DkProCloudMusic.ViewModels"
                    xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
-                   xmlns:tb="http://www.hardcodet.net/taskbar"
+                   xmlns:hc="https://handyorg.github.io/handycontrol"
                    mc:Ignorable="d"
                    Title="DKProCloudMusic" Height="450" Width="550" ResizeMode="CanMinimize">
     <Window.DataContext>
@@ -22,49 +21,59 @@
 
         <Grid Grid.Row="0">
             <Border BorderThickness="10,0,0,0">
-                <TextBlock HorizontalAlignment="Left" FontSize="30" Foreground="{StaticResource DefaultBrush}" Text="DKProCloudMusic" TextWrapping="Wrap" VerticalAlignment="Center" />
+                <TextBlock HorizontalAlignment="Left" FontSize="30" Foreground="{StaticResource PinkBrush}" Text="DKProCloudMusic" TextWrapping="Wrap" VerticalAlignment="Center" />
             </Border>
         </Grid>
 
         <Grid Grid.Row="1">
-            <Metro:AduTabControl Background="#FFF">
-                <Metro:AduTabControl.Resources>
+            <TabControl Background="#FFF" Style="{StaticResource TabControlCapsule}">
+                <TabControl.Resources>
                     <Style TargetType="TabPanel">
                         <Setter Property="HorizontalAlignment" Value="Center"/>
                     </Style>
-                </Metro:AduTabControl.Resources>
-                <Metro:AduTabItem Header="启动页面" IsSelected="True">
-                    <Border BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="0,0,0,0">
-                        <local:ConStart/>
+                </TabControl.Resources>
+                <TabItem Header="启动页面" IsSelected="True">
+                    <Border BorderBrush="{StaticResource DefaultBrush}" BorderThickness="0,0,0,0">
+                        <local:ConStart DataContext="{Binding Model.ConStartViewModel}"/>
                         <!--<ContentControl  Content="{Binding Model.ConStart}"/>-->
                     </Border>
-                </Metro:AduTabItem>
-                <Metro:AduTabItem Header="关于软件">
+                </TabItem>
+                <TabItem Header="关于软件">
                     <Grid Background="#FFE5E5E5"/>
-                </Metro:AduTabItem>
-                <Metro:AduTabItem Header="支持和捐赠">
+                </TabItem>
+                <TabItem Header="支持和捐赠">
                     <Grid Background="#FFE5E5E5"/>
-                </Metro:AduTabItem>
-                <Metro:AduTabItem Header="软件设置">
-                    <Border BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="0,0,0,0">
-                        <local:ConSetting/>
+                </TabItem>
+                <TabItem Header="软件设置">
+                    <Border BorderBrush="{StaticResource DefaultBrush}" BorderThickness="0,0,0,0">
+                        <local:ConSetting DataContext="{Binding Model.ConSettingViewModel}"/>
                         <!--<ContentControl  Content="{Binding Model.ConSetting}"/>-->
                     </Border>
-                </Metro:AduTabItem>
-            </Metro:AduTabControl>
+                </TabItem>
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="SelectionChanged">
+                        <behaviors:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type hc:TabControl}}, Path=SelectedIndex}"></behaviors:InvokeCommandAction>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+            </TabControl>
         </Grid>
 
 
-        <tb:TaskbarIcon x:Name="myNotifyIcon"
-                        Visibility="Visible"
-                        ToolTipText="Fallback ToolTip for Windows xp"
-                        IconSource="/Images/TrayIcons/Logo.ico"
-                        ContextMenu="{StaticResource TrayMenu}"
-                        MenuActivation="LeftOrRightClick"
-
-                        PopupActivation="DoubleClick"
-                        TrayToolTip="{StaticResource TrayToolTip}"
-        />
+        <hc:NotifyIcon Grid.Row="0" x:Name="NotifyIconContextContent" 
+                       Text="DkProCloudMusic"
+                       Visibility="Visible">
+            <hc:NotifyIcon.ContextMenu>
+                <ContextMenu  Width="100">
+                    <MenuItem Command="hc:ControlCommands.PushMainWindow2Top" Header="打开"/>
+                    <MenuItem Command="hc:ControlCommands.ShutdownApp" Header="退出"/>
+                </ContextMenu>
+            </hc:NotifyIcon.ContextMenu>
+            <hc:Interaction.Triggers>
+                <hc:EventTrigger EventName="Click">
+                    <hc:EventToCommand Command="hc:ControlCommands.PushMainWindow2Top"/>
+                </hc:EventTrigger>
+            </hc:Interaction.Triggers>
+        </hc:NotifyIcon>
     </Grid>
 
     
@@ -73,8 +82,11 @@
         <behaviors:EventTrigger EventName="Loaded">
             <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}"></behaviors:InvokeCommandAction>
         </behaviors:EventTrigger>
-        <behaviors:EventTrigger EventName="Closed">
-            <behaviors:InvokeCommandAction Command="{Binding ClosedCommand}"></behaviors:InvokeCommandAction>
+        <behaviors:EventTrigger EventName="StateChanged">
+            <behaviors:InvokeCommandAction Command="{Binding StateChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"></behaviors:InvokeCommandAction>
+        </behaviors:EventTrigger>
+        <behaviors:EventTrigger EventName="Closing">
+            <behaviors:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="True"></behaviors:InvokeCommandAction>
         </behaviors:EventTrigger>
     </behaviors:Interaction.Triggers>
-</Metro:MetroWindow>
+</Window>

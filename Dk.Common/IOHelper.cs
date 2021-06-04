@@ -14,10 +14,18 @@ namespace Dk.Common
         /// <returns></returns>
         public static DKProSet GetConfiguration()
         {
-            string text = FileHelper.ReadFile(_softwareConfigurationPath);
-            text = DESEncrypt.Decrypt(text, "awerfdgg");
-            DKProSet dkProSet = System.Text.Json.JsonSerializer.Deserialize<DKProSet>(text);
-            return dkProSet;
+            try
+            {
+                string text = FileHelper.ReadFile(_softwareConfigurationPath);
+                text = DESEncrypt.Decrypt(text, "awerfdgg");
+                DKProSet dkProSet = System.Text.Json.JsonSerializer.Deserialize<DKProSet>(text);
+                return dkProSet;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         //// Token: 0x06000094 RID: 148 RVA: 0x000084B8 File Offset: 0x000066B8
