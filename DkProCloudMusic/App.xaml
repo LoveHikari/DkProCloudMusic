@@ -6,13 +6,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="pack://application:,,,/DkProCloudMusic;component/Style/BaseStyle.xaml"/>-->
+                <ResourceDictionary Source="pack://application:,,,/DkProCloudMusic;component/Style/BaseStyle.xaml"/>
                 <!--<ResourceDictionary Source="pack://application:,,,/AduSkin.Demo;component/Style/ShowControl.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AduSkin.Demo;component/Style/Converter.xaml"/>-->
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <SolidColorBrush x:Key="PinkBrush" Color="#fc94c6"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -3,6 +3,8 @@ using DkProCloudMusic.Models;
 using HandyControl.Controls;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -28,7 +30,19 @@ namespace DkProCloudMusic.ViewModels
             {
                 return new DelegateCommand<object>(delegate (object obj)
                 {
-
+                    if (App.DkProSet.IsMinimizedAfterRun)  // 启动后最小化
+                    {
+                        MainWindow win = (MainWindow)obj;
+                        win.WindowState = WindowState.Minimized;
+                    }
+                    if (App.DkProSet.IsExecuteScriptAfterRun)  // 自动启动脚本
+                    {
+                        this.Model.ConStartViewModel.StartScriptCommand.Execute(null);
+                    }
+                    if (App.DkProSet.IsUseLiveAndDieTogether && File.Exists(App.DkProSet.LiveAndDieTogetherSoftwarePath)) // 如果打开了同生共死
+                    {
+                        Process.Start(App.DkProSet.LiveAndDieTogetherSoftwarePath);
+                    }
                     //this.GetConfigurationAndChangeUi();
                     //if (this._dkProSet.IsMinimizedAfterRun)
                     //{

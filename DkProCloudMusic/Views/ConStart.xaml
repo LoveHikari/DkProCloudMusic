@@ -18,12 +18,12 @@
             <DockPanel>
                 <DockPanel>
                     <TextBlock Text="当前软件端口：" TextWrapping="Wrap"/>
-                    <TextBlock Text="{Binding Model.NowPort, TargetNullValue='8125'}" TextDecorations="Underline" Foreground="Blue"/>
+                    <TextBlock Text="{Binding Model.NowPort, TargetNullValue='8125'}" TextDecorations="Underline" Foreground="{StaticResource LineTextBrush}"/>
                 </DockPanel>
 
                 <DockPanel HorizontalAlignment="Right">
                     <TextBlock Text="运行状态：" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                    <TextBlock Text="{Binding Model.RunStatus, TargetNullValue='脚本未启动'}" TextDecorations="Underline" Foreground="Blue"/>
+                    <TextBlock Text="{Binding Model.RunStatus, TargetNullValue='脚本未启动'}" TextDecorations="Underline" Foreground="{StaticResource LineTextBrush}"/>
                 </DockPanel>
 
             </DockPanel>

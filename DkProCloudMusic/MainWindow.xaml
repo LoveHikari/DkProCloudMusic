@@ -39,7 +39,9 @@
                     </Border>
                 </TabItem>
                 <TabItem Header="关于软件">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Border BorderBrush="{StaticResource DefaultBrush}" BorderThickness="0,0,0,0">
+                        <local:ConAbout />
+                    </Border>
                 </TabItem>
                 <TabItem Header="支持和捐赠">
                     <Grid Background="#FFE5E5E5"/>
@@ -80,7 +82,7 @@
 
     <behaviors:Interaction.Triggers>
         <behaviors:EventTrigger EventName="Loaded">
-            <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}"></behaviors:InvokeCommandAction>
+            <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"></behaviors:InvokeCommandAction>
         </behaviors:EventTrigger>
         <behaviors:EventTrigger EventName="StateChanged">
             <behaviors:InvokeCommandAction Command="{Binding StateChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"></behaviors:InvokeCommandAction>

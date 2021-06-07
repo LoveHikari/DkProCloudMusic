@@ -28,34 +28,6 @@ namespace Dk.Common
             
         }
 
-        //// Token: 0x06000094 RID: 148 RVA: 0x000084B8 File Offset: 0x000066B8
-        //public static ScriptJson GetScriptJsonModel()
-        //{
-        //    ScriptJson scriptJson;
-        //    try
-        //    {
-        //        string text = IOHelper.ReadFromFile(AppDomain.CurrentDomain.BaseDirectory + "\\src\\script\\package.json");
-        //        if (text != null && text.Length > 0)
-        //        {
-        //            scriptJson = JsonConvert.DeserializeObject<ScriptJson>(text);
-        //        }
-        //        else
-        //        {
-        //            scriptJson = new ScriptJson();
-        //        }
-        //        if (!scriptJson.Version.StartsWith("v"))
-        //        {
-        //            scriptJson.Version = "v" + scriptJson.Version;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        scriptJson = new ScriptJson();
-        //        new FrmError(ex).ShowDialog();
-        //    }
-        //    return scriptJson;
-        //}
-
         /// <summary>
         /// 设置配置文件
         /// </summary>
@@ -67,6 +39,25 @@ namespace Dk.Common
             FileHelper.WriteFile(_softwareConfigurationPath, text);
         }
 
+        // Token: 0x06000094 RID: 148 RVA: 0x000084B8 File Offset: 0x000066B8
+        public static ScriptJson GetScriptJsonModel()
+        {
+            ScriptJson scriptJson;
+            string text = FileHelper.ReadFile(AppDomain.CurrentDomain.BaseDirectory + "\\src\\script\\package.json");
+            if (text != null && text.Length > 0)
+            {
+                scriptJson = System.Text.Json.JsonSerializer.Deserialize<ScriptJson>(text);
+            }
+            else
+            {
+                scriptJson = new ScriptJson();
+            }
+            if (!scriptJson.Version.StartsWith("v"))
+            {
+                scriptJson.Version = "v" + scriptJson.Version;
+            }
+            return scriptJson;
+        }
         //// Token: 0x06000096 RID: 150 RVA: 0x00008598 File Offset: 0x00006798
         //public static void WriteToFile(string filePath, string content)
         //{

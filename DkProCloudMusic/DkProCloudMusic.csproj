@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>cloudmusic.ico</ApplicationIcon>
+	  <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
