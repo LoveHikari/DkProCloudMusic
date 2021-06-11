@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
+using Hikari.Common;
+using Hikari.Common.Net.Http;
 
 namespace Dk.Common
 {
@@ -39,7 +42,10 @@ namespace Dk.Common
             FileHelper.WriteFile(_softwareConfigurationPath, text);
         }
 
-        // Token: 0x06000094 RID: 148 RVA: 0x000084B8 File Offset: 0x000066B8
+        /// <summary>
+        /// 获得脚本版本
+        /// </summary>
+        /// <returns></returns>
         public static ScriptJson GetScriptJsonModel()
         {
             ScriptJson scriptJson;
@@ -58,6 +64,19 @@ namespace Dk.Common
             }
             return scriptJson;
         }
+        /// <summary>
+        /// 获得软件最新版本
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<GitHubReleaseJson> GetSoftwareVersionModel(string url)
+        {
+            HttpClientHelper httpClient = new HttpClientHelper();
+            var json = await httpClient.GetAsync(url);
+            return System.Text.Json.JsonSerializer.Deserialize<GitHubReleaseJson>(json);
+
+        }
+
+
         //// Token: 0x06000096 RID: 150 RVA: 0x00008598 File Offset: 0x00006798
         //public static void WriteToFile(string filePath, string content)
         //{

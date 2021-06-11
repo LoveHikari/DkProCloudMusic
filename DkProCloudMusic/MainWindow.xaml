@@ -61,7 +61,7 @@
         </Grid>
 
 
-        <hc:NotifyIcon Grid.Row="0" x:Name="NotifyIconContextContent" 
+        <hc:NotifyIcon Grid.Row="0" x:Name="notifyIconContextContent"
                        Text="DkProCloudMusic"
                        Visibility="Visible">
             <hc:NotifyIcon.ContextMenu>

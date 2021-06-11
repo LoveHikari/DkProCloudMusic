@@ -1,6 +1,7 @@
 ﻿using Dk.Common;
 using DkProCloudMusic.Models;
 using System.Windows.Input;
+using DkProCloudMusic.Properties;
 using HandyControl.Controls;
 
 namespace DkProCloudMusic.ViewModels
@@ -14,7 +15,9 @@ namespace DkProCloudMusic.ViewModels
             this.Model = new ConSettingModel();
             this.Model.DKProSet = App.DkProSet;
         }
-
+        /// <summary>
+        /// 保存命令
+        /// </summary>
         public ICommand SaveConfigCommand
         {
             get
@@ -27,6 +30,13 @@ namespace DkProCloudMusic.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 音源帮助命令
+        /// </summary>
+        public ICommand SoundSourceHelpCommand => new DelegateCommand<object>(delegate (object obj)
+        {
+            MessageBox.Show(Resources.SoundSourceHelp, "音源排序帮助");
+        });
 
     }
 }

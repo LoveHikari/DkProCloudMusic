@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FsLib.Common-netstandard" Version="6.0.0-preview.3.0.2" />
+    <PackageReference Include="Hikari.Common" Version="6.0.0-preview.4.1.0" />
   </ItemGroup>
 
 </Project>

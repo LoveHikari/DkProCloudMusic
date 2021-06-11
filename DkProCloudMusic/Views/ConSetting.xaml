@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:DkProCloudMusic.Views"
              xmlns:viewModels="clr-namespace:DkProCloudMusic.ViewModels"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="550">
     <!--<UserControl.DataContext>
@@ -47,7 +48,13 @@
                 <hc:TextBox Text="{Binding Model.DKProSet.LiveAndDieTogetherSoftwarePath}" TextWrapping="NoWrap" Height="26" Margin="0,5" hc:InfoElement.Placeholder="请输入网易云音乐的路径" IsReadOnly="{Binding Path=Model.CloudMusicPathIsReadOnly}"/>
                 <DockPanel Margin="0,5">
                     <TextBlock TextWrapping="Wrap" Text="音源优先级："></TextBlock>
-                    <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="音源帮助" TextDecorations="Underline" Foreground="Blue"  Margin="0, 0, 40, 0"></TextBlock>
+                    <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="音源帮助" TextDecorations="Underline" Foreground="Blue"  Margin="0, 0, 40, 0">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseLeftButtonDown">
+                                <b:InvokeCommandAction Command="{Binding SoundSourceHelpCommand}"></b:InvokeCommandAction>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </TextBlock>
                 </DockPanel>
                 <TextBox Text="{Binding Model.DKProSet.ResourcePriority}" TextWrapping="NoWrap" Height="26" Margin="0,5"/>
                 <Button Content="保存设置" Command="{Binding SaveConfigCommand}" Margin="0,5" Width="200" Style="{StaticResource ButtonInfo}"/>

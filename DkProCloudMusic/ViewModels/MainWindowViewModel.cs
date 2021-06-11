@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using HandyControl.Data;
+using Hikari.Common;
 
 namespace DkProCloudMusic.ViewModels
 {
@@ -43,6 +45,7 @@ namespace DkProCloudMusic.ViewModels
                     {
                         Process.Start(App.DkProSet.LiveAndDieTogetherSoftwarePath);
                     }
+
                     //this.GetConfigurationAndChangeUi();
                     //if (this._dkProSet.IsMinimizedAfterRun)
                     //{
@@ -63,13 +66,18 @@ namespace DkProCloudMusic.ViewModels
                 });
             }
         }
-
+        /// <summary>
+        /// 窗口状态改变
+        /// </summary>
         public ICommand StateChangedCommand => new DelegateCommand<object>(delegate (object obj)
         {
             MainWindow win = (MainWindow)obj;
-            if (win.WindowState == WindowState.Minimized)
+
+            if (win.WindowState == WindowState.Minimized)  // 最小化时
             {
                 win.Hide();
+                NotifyIcon icon = (NotifyIcon)win.FindName("notifyIconContextContent");
+                icon.ShowBalloonTip("DKPro通知", "后台运行中！", NotifyIconInfoType.Info);
             }
 
 
