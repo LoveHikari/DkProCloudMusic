@@ -69,7 +69,9 @@ namespace DkProCloudMusic.ViewModels
         });
 
 
-
+        /// <summary>
+        /// 加载完成
+        /// </summary>
         public ICommand LoadedCommand
         {
             get

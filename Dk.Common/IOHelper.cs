@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Hikari.Common;
+using Hikari.Common.IO;
 using Hikari.Common.Net.Http;
 
 namespace Dk.Common
@@ -19,7 +21,7 @@ namespace Dk.Common
         {
             try
             {
-                string text = FileHelper.ReadFile(_softwareConfigurationPath);
+                string text = FileHelper.Read(_softwareConfigurationPath);
                 text = DESEncrypt.Decrypt(text, "awerfdgg");
                 DKProSet dkProSet = System.Text.Json.JsonSerializer.Deserialize<DKProSet>(text);
                 return dkProSet;
@@ -39,7 +41,7 @@ namespace Dk.Common
         {
             string text = System.Text.Json.JsonSerializer.Serialize(proSet);
             text = DESEncrypt.Encrypt(text, "awerfdgg");
-            FileHelper.WriteFile(_softwareConfigurationPath, text);
+            FileHelper.Write(_softwareConfigurationPath, text);
         }
 
         /// <summary>
@@ -48,8 +50,14 @@ namespace Dk.Common
         /// <returns></returns>
         public static ScriptJson GetScriptJsonModel()
         {
+            var dir = AppDomain.CurrentDomain.BaseDirectory + "\\src\\script";
+            if (!Directory.Exists(dir))  // 如果脚本不存在，则获取最新脚本
+            {
+                DownloadScript();
+            }
+
             ScriptJson scriptJson;
-            string text = FileHelper.ReadFile(AppDomain.CurrentDomain.BaseDirectory + "\\src\\script\\package.json");
+            string text = FileHelper.Read(AppDomain.CurrentDomain.BaseDirectory + "\\src\\script\\package.json");
             if (text != null && text.Length > 0)
             {
                 scriptJson = System.Text.Json.JsonSerializer.Deserialize<ScriptJson>(text);
@@ -68,14 +76,25 @@ namespace Dk.Common
         /// 获得软件最新版本
         /// </summary>
         /// <returns></returns>
-        public static async Task<GitHubReleaseJson> GetSoftwareVersionModel(string url)
+        public static GitHubReleaseJson GetSoftwareVersionModel(string url)
         {
             HttpClientHelper httpClient = new HttpClientHelper();
-            var json = await httpClient.GetAsync(url);
+            var json = httpClient.Get(url);
             return System.Text.Json.JsonSerializer.Deserialize<GitHubReleaseJson>(json);
 
         }
 
+        /// <summary>
+        ///  下载脚本
+        /// </summary>
+        public static void DownloadScript()
+        {
+            string url = "https://api.github.com/repos/nondanee/UnblockNeteaseMusic/releases/latest";
+            var json = IOHelper.GetSoftwareVersionModel(url);
+            var zipballUrl = json.ZipballUrl;
+            HttpClientHelper httpClient = new HttpClientHelper();
+            await httpClient.DownloadAsync(zipballUrl, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "script.zip"), new Progress<HttpDownloadProgress>(), CancellationToken.None);
+        }
 
         //// Token: 0x06000096 RID: 150 RVA: 0x00008598 File Offset: 0x00006798
         //public static void WriteToFile(string filePath, string content)
