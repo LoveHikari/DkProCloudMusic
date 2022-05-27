@@ -7,6 +7,7 @@ using System.Windows.Input;
 using DkProCloudMusic.Models;
 using GalaSoft.MvvmLight.Threading;
 using Hikari.Common;
+using Hikari.Common.IO;
 using Hikari.Common.Net.Http;
 
 namespace DkProCloudMusic.ViewModels
@@ -39,7 +40,7 @@ namespace DkProCloudMusic.ViewModels
                 {
                     if (directoryInfo.Name.Contains("UnblockNeteaseMusic"))
                     {
-                        FileHelper.DeleteFolder(_scriptDir,true);
+                        DirectoryHelper.DeleteDirectory(_scriptDir,true);
                         Directory.Move(directoryInfo.FullName, _scriptDir);
                     }
                 }

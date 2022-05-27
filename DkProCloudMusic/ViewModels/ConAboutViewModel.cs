@@ -74,10 +74,10 @@ namespace DkProCloudMusic.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(delegate (object obj)
+                return new DelegateCommand<object>(async delegate  (object obj)
                 {
                     this.Model.NowVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                    var scriptJson = IOHelper.GetScriptJsonModel();
+                    var scriptJson = await IOHelper.GetScriptJsonModel();
                     this.Model.NowScriptVersion = scriptJson.Version;
                 });
             }

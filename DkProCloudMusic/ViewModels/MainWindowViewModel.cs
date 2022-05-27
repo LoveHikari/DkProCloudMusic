@@ -17,7 +17,7 @@ namespace DkProCloudMusic.ViewModels
         public MainWindowModel Model { get; set; }
         public MainWindowViewModel()
         {
-            DKProSet dkProSet = IOHelper.GetConfiguration()??new DKProSet();
+            DKProSet dkProSet = IOHelper.GetConfiguration().GetAwaiter().GetResult() ?? new DKProSet();
             App.DkProSet = dkProSet;
 
             this.Model = new MainWindowModel();
