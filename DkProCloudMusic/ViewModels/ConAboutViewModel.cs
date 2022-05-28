@@ -21,10 +21,10 @@ namespace DkProCloudMusic.ViewModels
         /// <summary>
         /// 软件更新
         /// </summary>
-        public ICommand SoftwareUpdateCommand => new DelegateCommand<object>(async delegate (object obj)
+        public ICommand SoftwareUpdateCommand => new DelegateCommand<object>( delegate (object obj)
         {
             string url = "https://api.github.com/repos/LoveHikari/DkProCloudMusic/releases/latest";
-            var json = await IOHelper.GetSoftwareVersionModel(url);
+            var json = IOHelper.GetSoftwareVersionModel(url);
             var latestVer = json.TagName.ToNumber();
             var nowVer = Model.NowVersion.ToNumber();
             if (latestVer > nowVer)
@@ -44,10 +44,10 @@ namespace DkProCloudMusic.ViewModels
         /// <summary>
         /// 脚本更新
         /// </summary>
-        public ICommand ScriptUpdateCommand => new DelegateCommand<object>(async delegate (object obj)
+        public ICommand ScriptUpdateCommand => new DelegateCommand<object>( delegate (object obj)
         {
             string url = "https://api.github.com/repos/nondanee/UnblockNeteaseMusic/releases/latest";
-            var json = await IOHelper.GetSoftwareVersionModel(url);
+            var json = IOHelper.GetSoftwareVersionModel(url);
             var latestVer = json.TagName.ToNumber();
             var nowVer = Model.NowScriptVersion.ToNumber();
             if (latestVer > nowVer)
@@ -76,10 +76,10 @@ namespace DkProCloudMusic.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(async delegate  (object obj)
+                return new DelegateCommand<object>( delegate  (object obj)
                 {
                     this.Model.NowVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                    var scriptJson = await IOHelper.GetScriptJsonModel();
+                    var scriptJson = IOHelper.GetScriptJsonModel();
                     this.Model.NowScriptVersion = scriptJson.Version;
                 });
             }

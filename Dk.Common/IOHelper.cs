@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -92,10 +93,41 @@ namespace Dk.Common
             string url = "https://api.github.com/repos/nondanee/UnblockNeteaseMusic/releases/latest";
             var json = IOHelper.GetSoftwareVersionModel(url);
             var zipballUrl = json.ZipballUrl;
-            HttpClientHelper httpClient = new HttpClientHelper();
-            await httpClient.DownloadAsync(zipballUrl, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "script.zip"), new Progress<HttpDownloadProgress>(), CancellationToken.None);
+
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "script.zip");
+            Download(zipballUrl, filePath);
+            // 解压
+            new ZipLibHelper().UnzipZip(filePath, System.AppDomain.CurrentDomain.BaseDirectory);
+            // 覆盖
+            var o = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "script");
+            var nondanee = DirectoryHelper.FindDirectories(o)[0];
+
+            DirectoryHelper.RenameDirectory(nondanee, Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "src", "script"));
+            DirectoryHelper.DeleteDirectory(o, true);
+            File.Delete(filePath);
         }
 
+
+        /// <summary>
+        /// 下载文件
+        /// </summary>
+        /// <param name="requestUri">请求地址</param>
+        /// <param name="path">保持文件路径带文件名</param>
+        /// <returns></returns>
+        private static void Download(string requestUri, string path)
+        {
+            using HttpClient client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(requestUri));
+            request.Headers.Add("user-agent", "Anything");
+            using var responseMessage = client.Send(request);
+            var content = responseMessage.Content;
+
+            using var responseStream = content.ReadAsStream();
+
+            using var fileStream = new FileInfo(path).Create();
+            responseStream.CopyTo(fileStream);
+
+        }
         //// Token: 0x06000096 RID: 150 RVA: 0x00008598 File Offset: 0x00006798
         //public static void WriteToFile(string filePath, string content)
         //{
