@@ -52,14 +52,14 @@ namespace DkProCloudMusic.ViewModels
             Model.StartOrClose = "你们快住手，不要再打了啦";
             new Thread(delegate ()
             {
-                string text = "\"" + AppDomain.CurrentDomain.BaseDirectory + "src\\node\\node.exe\" ";
+                string text = AppDomain.CurrentDomain.BaseDirectory + "src\\node\\node.exe ";
                 string text2 = "\"" + AppDomain.CurrentDomain.BaseDirectory + "src\\script\\app.js\" ";
                 string str = string.Concat(new string[]
                 {
                     text,
                     text2,
-                    " -a 127.0.0.1 -p ",
-                    App.DkProSet.SoftwarePort.ToString(),
+                    "-a 127.0.0.1 -p ",
+                    App.DkProSet.SoftwarePort + ":" + (App.DkProSet.SoftwarePort+1),
                     " -o ",
                     App.DkProSet.ResourcePriority
                 });

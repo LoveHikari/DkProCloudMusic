@@ -46,7 +46,7 @@
         /// <summary>
         /// 音源优先级
         /// </summary>
-        public string ResourcePriority { get; set; } = "kuwo kugou qq migu xiami baidu joox youtube";
+        public string ResourcePriority { get; set; } = "kuwo kugou bilibili youtube";
 
         /// <summary>
         /// 程序端口

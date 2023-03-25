@@ -1,7 +1,0 @@
-.npmignore
-.gitignore
-.dockerignore
-
-Dockerfile*
-*.yml
-src/browser/

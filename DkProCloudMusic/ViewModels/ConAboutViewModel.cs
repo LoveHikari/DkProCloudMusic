@@ -46,7 +46,7 @@ namespace DkProCloudMusic.ViewModels
         /// </summary>
         public ICommand ScriptUpdateCommand => new DelegateCommand<object>( delegate (object obj)
         {
-            string url = "https://api.github.com/repos/nondanee/UnblockNeteaseMusic/releases/latest";
+            string url = "https://api.github.com/repos/unblockneteasemusic/server/releases/latest";
             var json = IOHelper.GetSoftwareVersionModel(url);
             var latestVer = json.TagName.ToNumber();
             var nowVer = Model.NowScriptVersion.ToNumber();
