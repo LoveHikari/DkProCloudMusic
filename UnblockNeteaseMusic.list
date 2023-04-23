@@ -11,14 +11,6 @@ DOMAIN,interface3.music.163.com
 DOMAIN,interface3.music.163.com.163jiasu.com
 DOMAIN,interface.music.163.com
 DOMAIN,music.163.com
-USER-AGENT,%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90
-USER-AGENT,%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90*
-USER-AGENT,%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90**
-USER-AGENT,NeteaseMusic*
-USER-AGENT,NeteaseMusic**
-USER-AGENT,网易云音乐*
-USER-AGENT,网易云音乐**
-USER-AGENT,*网易云音乐**
 IP-CIDR,39.105.63.80/32,no-resolve
 IP-CIDR,39.105.175.128/32,no-resolve
 IP-CIDR,45.254.48.1/32,no-resolve
