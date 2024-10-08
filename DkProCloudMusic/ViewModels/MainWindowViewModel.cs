@@ -141,7 +141,7 @@ namespace DkProCloudMusic.ViewModels
 
         public ICommand SelectionChangedCommand => new DelegateCommand<object>(delegate (object obj)
         {
-            int index = obj.ToInt32();
+            int index = obj.ToInt32(0);
             if (index == 0)
             {
                 Model.ConStartViewModel.Model.NowPort = App.DkProSet.SoftwarePort;

@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Dk.Common;
 using GalaSoft.MvvmLight.Threading;
+using Hikari.Common;
 
 namespace DkProCloudMusic
 {
@@ -21,7 +22,7 @@ namespace DkProCloudMusic
         {
             Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-
+            ThreadPoolHelper.BeginThreadPool();
             DispatcherHelper.Initialize();
         }
         /// <summary>

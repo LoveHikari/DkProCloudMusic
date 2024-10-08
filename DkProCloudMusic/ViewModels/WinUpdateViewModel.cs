@@ -27,28 +27,33 @@ namespace DkProCloudMusic.ViewModels
             // 下载
             ThreadPool.QueueUserWorkItem(async state =>
             {
+
                 string filePath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "script.zip");
-                //HttpClient client = new HttpClient();
-
-                //await Dk.Common.HttpClientExtensions.GetByteArrayAsync(client, Model.ZipballUrl, filePath);
-                Model.DownloadProgress = 50;
-                // 解压
-                new ZipLibHelper().UnzipZip(filePath, System.AppDomain.CurrentDomain.BaseDirectory);
-                // 覆盖
-                var o = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "script");
-                foreach (DirectoryInfo directoryInfo in new DirectoryInfo(o).GetDirectories())
-                {
-                    if (directoryInfo.Name.Contains("UnblockNeteaseMusic"))
+                HttpClient client = new HttpClient();
+                await Dk.Common.HttpClientExtensions.GetByteArrayAsync(client,Model.ZipballUrl, filePath, new Progress<HttpDownloadProgress>((
+                    downloadProgress =>
                     {
-                        DirectoryHelper.DeleteDirectory(_scriptDir,true);
-                        Directory.Move(directoryInfo.FullName, _scriptDir);
-                    }
-                }
+                        System.Diagnostics.Debug.WriteLine($"{downloadProgress.BytesReceived}/{downloadProgress.TotalBytesToReceive}");
+                        Model.DownloadProgress = (double)downloadProgress.BytesReceived * 100 / downloadProgress.TotalBytesToReceive??0;
+                    })), CancellationToken.None);
+                //Model.DownloadProgress = 50;
+               // // 解压
+               // new ZipLibHelper().UnzipZip(filePath, System.AppDomain.CurrentDomain.BaseDirectory);
+               // // 覆盖
+               // var o = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "src\\script");
+               // foreach (DirectoryInfo directoryInfo in new DirectoryInfo(o).GetDirectories())
+               // {
+               //     if (directoryInfo.Name.Contains("UnblockNeteaseMusic"))
+               //     {
+               //         DirectoryHelper.DeleteDirectory(_scriptDir,true);
+               //         Directory.Move(directoryInfo.FullName, _scriptDir);
+               //     }
+               // }
 
-                Model.DownloadProgress = 100;
-                // FileHelper.CopyDir2(o, Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "src"));
+               //// Model.DownloadProgress = 100;
+               // // FileHelper.CopyDir2(o, Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "src"));
 
-                MessageBox.Show("完成");
+               // MessageBox.Show("完成");
             });
 
 

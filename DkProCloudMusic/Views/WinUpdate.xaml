@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DkProCloudMusic.Views"
         xmlns:viewModels="clr-namespace:DkProCloudMusic.ViewModels"
         mc:Ignorable="d"
-        Title="WinUpdate" Height="350" Width="450">
+        Title="更新" Height="350" Width="450" ResizeMode="CanMinimize">
     <Window.DataContext>
         <viewModels:WinUpdateViewModel/>
     </Window.DataContext>
