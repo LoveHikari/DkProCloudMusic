@@ -41,7 +41,7 @@
             }
         }
 
-        public double _downloadProgress;
+        private double _downloadProgress;
         /// <summary>
         /// 下载进度
         /// </summary>
@@ -51,6 +51,31 @@
             set
             {
                 _downloadProgress = value; NotifyPropertyChanged();
+            }
+        }
+
+        private string _updateBtnText;
+        /// <summary>
+        /// 更新按钮文字
+        /// </summary>
+        public string UpdateBtnText
+        {
+            get => _updateBtnText;
+            set
+            {
+                _updateBtnText = value; NotifyPropertyChanged();
+            }
+        }
+        private bool _updateBtnState;
+        /// <summary>
+        /// 更新按钮状态
+        /// </summary>
+        public bool UpdateBtnState
+        {
+            get => _updateBtnState;
+            set
+            {
+                _updateBtnState = value; NotifyPropertyChanged();
             }
         }
     }

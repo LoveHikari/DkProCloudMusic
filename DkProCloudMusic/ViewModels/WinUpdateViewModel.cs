@@ -19,44 +19,67 @@ namespace DkProCloudMusic.ViewModels
         public WinUpdateViewModel()
         {
             this.Model = new WinUpdateModel();
+            this.Model.UpdateBtnText = "立即更新";
             _scriptDir = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "src", "script");
         }
-
+        /// <summary>
+        /// 更新
+        /// </summary>
         public ICommand UpdateCommand => new DelegateCommand<object>(delegate (object obj)
         {
+            this.Model.UpdateBtnState = false;
             // 下载
             ThreadPool.QueueUserWorkItem(async state =>
             {
 
                 string filePath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "script.zip");
-                HttpClient client = new HttpClient();
-                await Dk.Common.HttpClientExtensions.GetByteArrayAsync(client,Model.ZipballUrl, filePath, new Progress<HttpDownloadProgress>((
-                    downloadProgress =>
+                //HttpClient client = new HttpClient();
+                //this.Model.UpdateBtnText = "正在下载...";
+                //await client.GetByteArrayAsync(Model.ZipballUrl, filePath, new Progress<HttpDownloadProgress>((
+                //    downloadProgress =>
+                //    {
+                //        Model.DownloadProgress = (double)downloadProgress.BytesReceived * 90 / downloadProgress.TotalBytesToReceive??0;
+                //    })), CancellationToken.None);
+                this.Model.UpdateBtnText = "正在解压...";
+                // 解压
+                new ZipLibHelper().UnzipZip(filePath, System.AppDomain.CurrentDomain.BaseDirectory);
+                File.Delete(filePath);
+                // 覆盖
+                var o = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "script");
+                foreach (DirectoryInfo directoryInfo in new DirectoryInfo(o).GetDirectories())
+                {
+                    if (directoryInfo.Name.Contains("UnblockNeteaseMusic"))
                     {
-                        System.Diagnostics.Debug.WriteLine($"{downloadProgress.BytesReceived}/{downloadProgress.TotalBytesToReceive}");
-                        Model.DownloadProgress = (double)downloadProgress.BytesReceived * 100 / downloadProgress.TotalBytesToReceive??0;
-                    })), CancellationToken.None);
-                //Model.DownloadProgress = 50;
-               // // 解压
-               // new ZipLibHelper().UnzipZip(filePath, System.AppDomain.CurrentDomain.BaseDirectory);
-               // // 覆盖
-               // var o = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "src\\script");
-               // foreach (DirectoryInfo directoryInfo in new DirectoryInfo(o).GetDirectories())
-               // {
-               //     if (directoryInfo.Name.Contains("UnblockNeteaseMusic"))
-               //     {
-               //         DirectoryHelper.DeleteDirectory(_scriptDir,true);
-               //         Directory.Move(directoryInfo.FullName, _scriptDir);
-               //     }
-               // }
+                        DirectoryHelper.DeleteDirectory(_scriptDir, true);
+                        Directory.Move(directoryInfo.FullName, _scriptDir);
+                    }
+                }
+                DirectoryHelper.DeleteDirectory(o, true);
+                Model.DownloadProgress = 100;
 
-               //// Model.DownloadProgress = 100;
-               // // FileHelper.CopyDir2(o, Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "src"));
-
-               // MessageBox.Show("完成");
+                this.Model.UpdateBtnText = "更新完成";
+                this.Model.UpdateBtnState = true;
+                var dr = MessageBox.Show("完成");
+                if (dr == MessageBoxResult.OK)
+                {
+                    if (obj is Window window)
+                    {
+                        window.Close(); // 关闭传递进来的窗口
+                    }
+                }
             });
 
 
+        });
+        /// <summary>
+        /// 不更新
+        /// </summary>
+        public ICommand NotUpdateCommand => new DelegateCommand<object>(delegate (object obj)
+        {
+            if (obj is Window window)
+            {
+                window.Close(); // 关闭传递进来的窗口
+            }
         });
     }
 }
