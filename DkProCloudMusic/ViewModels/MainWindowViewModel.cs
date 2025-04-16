@@ -11,6 +11,7 @@ using HandyControl.Data;
 using Hikari.Common;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using CommunityToolkit.Mvvm.Input;
 
 namespace DkProCloudMusic.ViewModels
 {
@@ -34,7 +35,7 @@ namespace DkProCloudMusic.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(delegate (object obj)
+                return new RelayCommand<object>(delegate (object obj)
                 {
                     // 判断证书是否安装，如果没有，则安装
                     new Thread(() =>
@@ -95,7 +96,7 @@ namespace DkProCloudMusic.ViewModels
         /// <summary>
         /// 窗口状态改变
         /// </summary>
-        public ICommand StateChangedCommand => new DelegateCommand<object>(delegate (object obj)
+        public ICommand StateChangedCommand => new RelayCommand<object>(delegate (object obj)
         {
             MainWindow win = (MainWindow)obj;
 
@@ -113,10 +114,10 @@ namespace DkProCloudMusic.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(delegate (object obj)
+                return new RelayCommand<object>(delegate (object obj)
                 {
                     CancelEventArgs args = (CancelEventArgs)obj;
-                    var result = HandyControl.Controls.MessageBox.Show("是否确认关闭？", "滑稽提示", MessageBoxButton.OKCancel);
+                    var result = HandyControl.Controls.MessageBox.Show("是否确认关闭？", "滑稽提示", MessageBoxButton.OKCancel, MessageBoxImage.Information);
                     if (result == MessageBoxResult.OK)
                     {
                         Model.ConStartViewModel.StopScript();
@@ -139,7 +140,7 @@ namespace DkProCloudMusic.ViewModels
             }
         }
 
-        public ICommand SelectionChangedCommand => new DelegateCommand<object>(delegate (object obj)
+        public ICommand SelectionChangedCommand => new RelayCommand<object>(delegate (object obj)
         {
             int index = obj.ToInt32(0);
             if (index == 0)

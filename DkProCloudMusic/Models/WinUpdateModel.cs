@@ -1,6 +1,8 @@
-﻿namespace DkProCloudMusic.Models
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace DkProCloudMusic.Models
 {
-    public class WinUpdateModel : NotificationObject
+    public class WinUpdateModel : ObservableObject
     {
         private string _zipballUrl;
         /// <summary>
@@ -11,7 +13,7 @@
             get => _zipballUrl;
             set
             {
-                _zipballUrl = value; NotifyPropertyChanged();
+                _zipballUrl = value; OnPropertyChanged();
             }
         }
 
@@ -24,7 +26,7 @@
             get => _body;
             set
             {
-                _body = value; NotifyPropertyChanged();
+                _body = value; OnPropertyChanged();
             }
         }
 
@@ -37,7 +39,7 @@
             get => _tagName;
             set
             {
-                _tagName = value; NotifyPropertyChanged();
+                _tagName = value; OnPropertyChanged();
             }
         }
 
@@ -50,7 +52,7 @@
             get => _downloadProgress;
             set
             {
-                _downloadProgress = value; NotifyPropertyChanged();
+                _downloadProgress = value; OnPropertyChanged();
             }
         }
 
@@ -63,10 +65,10 @@
             get => _updateBtnText;
             set
             {
-                _updateBtnText = value; NotifyPropertyChanged();
+                _updateBtnText = value; OnPropertyChanged();
             }
         }
-        private bool _updateBtnState;
+        private bool _updateBtnState = true;
         /// <summary>
         /// 更新按钮状态
         /// </summary>
@@ -75,7 +77,7 @@
             get => _updateBtnState;
             set
             {
-                _updateBtnState = value; NotifyPropertyChanged();
+                _updateBtnState = value; OnPropertyChanged();
             }
         }
     }

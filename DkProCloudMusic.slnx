@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Dk.Common/Dk.Common.csproj" />
+  <Project Path="DkProCloudMusic/DkProCloudMusic.csproj" />
+  <Project Path="TestProject1/TestProject1.csproj" />
+</Solution>

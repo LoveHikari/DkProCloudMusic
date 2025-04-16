@@ -2,6 +2,7 @@
 using Dk.Common;
 using DkProCloudMusic.Models;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using DkProCloudMusic.Properties;
 using HandyControl.Controls;
 using Hikari.Common;
@@ -25,7 +26,7 @@ namespace DkProCloudMusic.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(delegate (object obj)
+                return new RelayCommand<object>(delegate (object obj)
                 {
                     ChangeHighQuailty();
                     App.DkProSet = Model.DKProSet;
@@ -37,7 +38,7 @@ namespace DkProCloudMusic.ViewModels
         /// <summary>
         /// 音源帮助命令
         /// </summary>
-        public ICommand SoundSourceHelpCommand => new DelegateCommand<object>(delegate (object obj)
+        public ICommand SoundSourceHelpCommand => new RelayCommand<object>(delegate (object obj)
         {
             MessageBox.Show(Resources.SoundSourceHelp, "音源排序帮助");
         });

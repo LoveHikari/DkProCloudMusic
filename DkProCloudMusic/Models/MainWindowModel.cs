@@ -1,10 +1,11 @@
 ﻿using System.Windows.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Dk.Common;
 using DkProCloudMusic.ViewModels;
 
 namespace DkProCloudMusic.Models
 {
-    public class MainWindowModel : NotificationObject
+    public class MainWindowModel : ObservableObject
     {
         
         
@@ -14,13 +15,13 @@ namespace DkProCloudMusic.Models
         public ConStartViewModel ConStartViewModel
         {
             get => _conStartViewModel;
-            set { _conStartViewModel = value; NotifyPropertyChanged(); }
+            set { _conStartViewModel = value; OnPropertyChanged(); }
         }
         private ConSettingViewModel _conSettingViewModel;
         public ConSettingViewModel ConSettingViewModel
         {
             get => _conSettingViewModel;
-            set { _conSettingViewModel = value; NotifyPropertyChanged(); }
+            set { _conSettingViewModel = value; OnPropertyChanged(); }
         }
         
     }

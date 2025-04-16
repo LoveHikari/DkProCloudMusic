@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Dk.Common;
 using DkProCloudMusic.Models;
 
@@ -23,7 +24,7 @@ namespace DkProCloudMusic.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(delegate (object obj)
+                return new RelayCommand<object>(delegate (object obj)
                 {
                     this.Model.IsRunning = !this.Model.IsRunning;
                     if (this.Model.IsRunning)

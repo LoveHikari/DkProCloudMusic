@@ -1,29 +1,56 @@
-﻿<UserControl x:Class="DkProCloudMusic.Views.ConStart"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DkProCloudMusic.Views"
-             xmlns:viewModels="clr-namespace:DkProCloudMusic.ViewModels"
-             xmlns:hc="https://handyorg.github.io/handycontrol"
-             mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="550">
-    <!--<UserControl.DataContext>
-        <viewModels:MainWindowViewModel/>
-    </UserControl.DataContext>-->
+﻿<UserControl
+    x:Class="DkProCloudMusic.Views.ConStart"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:DkProCloudMusic.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:DkProCloudMusic.ViewModels"
+    d:DesignHeight="250"
+    d:DesignWidth="550"
+    mc:Ignorable="d">
+    <UserControl.DataContext>
+        <viewModels:ConStartViewModel/>
+    </UserControl.DataContext>
     <Grid Background="{StaticResource DefaultBrush}">
-        <StackPanel HorizontalAlignment="Center" Margin="0,10" >
-            <Button Margin="0,20" Content="{Binding Model.StartOrClose, TargetNullValue='赶快给我启动这个脚本，我急用'}" Command="{Binding StartScriptCommand}" HorizontalAlignment="Center" Height="40" Width="260" Style="{StaticResource ButtonInfo}"/>
-            <TextBlock Margin="0,20" Text="打开网易云客户端设置，代理一栏 IP填写127.0.0.1，端口号填写下方端口，点击确定重启，无需理会点击测试代理不可用的提示（本软件需要管理员身份运行）。" FontWeight="Light" Width="380" Height="50" TextWrapping="Wrap"/>
+        <StackPanel Margin="0,10" HorizontalAlignment="Center">
+            <Button
+                Width="260"
+                Height="40"
+                Margin="0,20"
+                HorizontalAlignment="Center"
+                Command="{Binding StartScriptCommand}"
+                Content="{Binding Model.StartOrClose, TargetNullValue='赶快给我启动这个脚本，我急用'}"
+                d:Content="赶快给我启动这个脚本，我急用"
+                Style="{StaticResource ButtonInfo}" />
+            <TextBlock
+                Width="380"
+                Height="50"
+                Margin="0,20"
+                FontWeight="Light"
+                Text="打开网易云客户端设置，代理一栏 IP填写127.0.0.1，端口号填写下方端口，点击确定重启，无需理会点击测试代理不可用的提示（本软件需要管理员身份运行）。"
+                TextWrapping="Wrap" />
             <DockPanel>
                 <DockPanel>
-                    <TextBlock Text="当前软件端口：" TextWrapping="Wrap"/>
-                    <TextBlock Text="{Binding Model.NowPort, TargetNullValue='8125'}" TextDecorations="Underline" Foreground="{StaticResource LineTextBrush}"/>
+                    <TextBlock Text="当前软件端口：" TextWrapping="Wrap" />
+                    <TextBlock
+                        d:Text="8125"
+                        Foreground="{StaticResource LineTextBrush}"
+                        Text="{Binding Model.NowPort, TargetNullValue='8125'}"
+                        TextDecorations="Underline" />
                 </DockPanel>
 
                 <DockPanel HorizontalAlignment="Right">
-                    <TextBlock Text="运行状态：" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                    <TextBlock Text="{Binding Model.RunStatus, TargetNullValue='脚本未启动'}" TextDecorations="Underline" Foreground="{StaticResource LineTextBrush}"/>
+                    <TextBlock
+                        VerticalAlignment="Top"
+                        Text="运行状态："
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        d:Text="脚本未启动"
+                        Foreground="{StaticResource LineTextBrush}"
+                        Text="{Binding Model.RunStatus, TargetNullValue='脚本未启动'}"
+                        TextDecorations="Underline" />
                 </DockPanel>
 
             </DockPanel>

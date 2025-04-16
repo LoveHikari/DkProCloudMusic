@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:DkProCloudMusic.Views"
              xmlns:viewModels="clr-namespace:DkProCloudMusic.ViewModels"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-             mc:Ignorable="d" 
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
              d:DesignHeight="250" d:DesignWidth="550">
     <UserControl.DataContext>
         <viewModels:ConAboutViewModel/>

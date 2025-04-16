@@ -1,8 +1,9 @@
-﻿using Dk.Common;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Dk.Common;
 
 namespace DkProCloudMusic.Models
 {
-    public class ConStartModel : NotificationObject
+    public class ConStartModel : ObservableObject
     {
         private int _nowPort;
         /// <summary>
@@ -11,7 +12,7 @@ namespace DkProCloudMusic.Models
         public int NowPort
         {
             get => _nowPort;
-            set { _nowPort = value; NotifyPropertyChanged(); }
+            set { _nowPort = value; OnPropertyChanged(); }
         }
         private bool _isRunning;
         /// <summary>
@@ -20,7 +21,7 @@ namespace DkProCloudMusic.Models
         public bool IsRunning
         {
             get => _isRunning;
-            set { _isRunning = value; NotifyPropertyChanged(); }
+            set { _isRunning = value; OnPropertyChanged(); }
         }
         private string _runStatus;
         /// <summary>
@@ -29,7 +30,7 @@ namespace DkProCloudMusic.Models
         public string RunStatus
         {
             get => _runStatus;
-            set { _runStatus = value; NotifyPropertyChanged(); }
+            set { _runStatus = value; OnPropertyChanged(); }
         }
         private string _startOrClose;
         /// <summary>
@@ -38,7 +39,7 @@ namespace DkProCloudMusic.Models
         public string StartOrClose
         {
             get => _startOrClose;
-            set { _startOrClose = value; NotifyPropertyChanged(); }
+            set { _startOrClose = value; OnPropertyChanged(); }
         }
     }
 }

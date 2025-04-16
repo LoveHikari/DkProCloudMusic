@@ -8,7 +8,7 @@
     xmlns:viewModels="clr-namespace:DkProCloudMusic.ViewModels"
     Title="更新"
     Width="450"
-    Height="350"
+    Height="370"
     ResizeMode="CanMinimize"
     mc:Ignorable="d">
     <Window.DataContext>

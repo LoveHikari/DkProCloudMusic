@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Dk.Common;
 using DkProCloudMusic.Models;
 using DkProCloudMusic.Views;
 using GalaSoft.MvvmLight.Threading;
-using HandyControl.Controls;
 using Hikari.Common;
+using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace DkProCloudMusic.ViewModels
 {
@@ -23,9 +26,9 @@ namespace DkProCloudMusic.ViewModels
         /// <summary>
         /// 软件更新
         /// </summary>
-        public ICommand SoftwareUpdateCommand => new DelegateCommand<object>(delegate (object obj)
+        public ICommand SoftwareUpdateCommand => new AsyncRelayCommand<object>(async delegate (object obj)
         {
-            ThreadPool.QueueUserWorkItem(state =>
+            await Task.Run(() =>
             {
                 string url = "https://api.github.com/repos/LoveHikari/DkProCloudMusic/releases/latest";
                 var json = IOHelper.GetSoftwareVersionModel(url);
@@ -48,7 +51,7 @@ namespace DkProCloudMusic.ViewModels
                 {
                     DispatcherHelper.CheckBeginInvokeOnUI((() =>
                     {
-                        MessageBox.Show("当前软件已经是最新版本", "滑稽提示");
+                        MessageBox.Show("当前脚本已经是最新版本", "滑稽提示", MessageBoxButton.OK, MessageBoxImage.Information);
                     }));
 
                 }
@@ -58,9 +61,10 @@ namespace DkProCloudMusic.ViewModels
         /// <summary>
         /// 脚本更新
         /// </summary>
-        public ICommand ScriptUpdateCommand => new DelegateCommand<object>(delegate (object obj)
+        public ICommand ScriptUpdateCommand => new AsyncRelayCommand<object>( async delegate (object obj)
         {
-            ThreadPool.QueueUserWorkItem(state =>
+            DialogHelper.ShowLoading();
+            await Task.Run(() =>
             {
                 string url = "https://api.github.com/repos/unblockneteasemusic/server/releases/latest";
                 var json = IOHelper.GetSoftwareVersionModel(url);
@@ -82,14 +86,14 @@ namespace DkProCloudMusic.ViewModels
                 {
                     DispatcherHelper.CheckBeginInvokeOnUI((() =>
                     {
-                        MessageBox.Show("当前脚本已经是最新版本", "滑稽提示");
+                        MessageBox.Show("当前脚本已经是最新版本", "滑稽提示", MessageBoxButton.OK, MessageBoxImage.Information);
                     }));
                 }
                 //this.Model.NowVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 //var scriptJson = IOHelper.GetScriptJsonModel();
                 //this.Model.NowScriptVersion = scriptJson.Version;
             });
-
+            DialogHelper.CloseLoading();
         });
 
 
@@ -100,7 +104,7 @@ namespace DkProCloudMusic.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(delegate (object obj)
+                return new RelayCommand<object>(delegate (object obj)
                 {
                     this.Model.NowVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                     var scriptJson = IOHelper.GetScriptJsonModel();
